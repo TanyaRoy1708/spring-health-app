@@ -4,6 +4,13 @@ pipeline {
     environment {
         IMAGE_NAME = "tan1708/spring-app"
         APP_VERSION = "${BUILD_NUMBER}"
+        CONTAINER_NAME = "spring-app"
+        HOST_PORT = "8081"
+        CONTAINER_POSRT = "8080"
+    }
+
+    options{
+        timestamps()
     }
 
     stages {
@@ -39,16 +46,37 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                docker stop spring-app || true
-                docker rm spring-app || true
                 docker run -d \
+                  --restart unless-stopped \
                   -e APP_VERSION=$APP_VERSION \
-                  -p 8081:8080 \
-                  --name spring-app \
+                  -p $HOST_PORT:$CONTAINER_PORT \
+                  --name $CONTAINER_NAME \
                   $IMAGE_NAME:$APP_VERSION
+
+                '''
+            }
+
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                sleep 10
+                curl -f http://localhost:$HOST_PORT/health
                 '''
             }
         }
     }
+
+    post {
+        always {
+            sh 'docker image prune -f || true'
+        }
+        success {
+            echo "Deployment successful: $IMAGE_NAME:$APP_VERSION"
+        }
+        failure {
+            echo "Deployment failed"
+        }
+    }
 }
+
 
