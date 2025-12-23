@@ -10,7 +10,7 @@ pipeline {
 
         stage('Check-out') {
             steps {
-                git 'https://github.com/tanyaroy1708/spring-health-app.git'
+                git 'https://github.com/TanyaRoy1708/spring-health-app.git'
             }
         }
 
