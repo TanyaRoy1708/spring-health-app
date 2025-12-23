@@ -43,7 +43,7 @@ pipeline {
                 docker rm spring-app || true
                 docker run -d \
                   -e APP_VERSION=$APP_VERSION \
-                  -p 8080:8080 \
+                  -p 8081:8080 \
                   --name spring-app \
                   $IMAGE_NAME:$APP_VERSION
                 '''
