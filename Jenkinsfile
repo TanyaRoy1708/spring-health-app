@@ -10,15 +10,10 @@ pipeline {
 
         stage('Check-out') {
             steps {
-                git 'https://github.com/tanyaroy1708/springboot-health-service.git'
+                git url:'https://github.com/TanyaRoy1708/spring-health-app.git', branch:"main"
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
 
         stage('Docker Build') {
             steps {
