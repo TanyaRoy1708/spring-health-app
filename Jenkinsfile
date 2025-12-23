@@ -10,7 +10,7 @@ pipeline {
 
         stage('Check-out') {
             steps {
-                git 'https://github.com/tanyaroy1708/springboot-health-service.git'
+                git 'https://github.com/tanyaroy1708/spring-health-app.git'
             }
         }
 
