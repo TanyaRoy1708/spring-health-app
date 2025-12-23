@@ -14,11 +14,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
 
         stage('Docker Build') {
             steps {
