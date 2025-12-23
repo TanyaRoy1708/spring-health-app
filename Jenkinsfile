@@ -45,6 +45,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
+                    docker stop $CONTAINER_NAME || true
+                    docker rm $CONTAINER_NAME || true
                     docker run -d \
                         --restart unless-stopped \
                         -e APP_VERSION=$APP_VERSION \
